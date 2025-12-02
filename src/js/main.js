@@ -1,6 +1,8 @@
 // TechGame - Main Entry Point
-// Game initialization will be implemented in future stories
 
 export function initialize() {
-  // Placeholder for game initialization
+  console.log('TechGame initialized');
 }
+
+// Auto-initialize when module loads
+initialize();

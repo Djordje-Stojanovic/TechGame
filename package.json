@@ -1,18 +1,11 @@
 {
   "name": "techgame",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tailwindcss -i ./src/css/input.css -o ./dist/output.css",
+    "watch": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
     "tailwindcss": "^3.4.18"
   }

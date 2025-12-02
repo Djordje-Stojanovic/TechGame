@@ -1,6 +1,6 @@
 # Story 1.1: Project Initialization
 
-Status: Ready for Review
+Status: Done
 
 ## Story
 
@@ -246,15 +246,23 @@ Claude Opus 4.5 (claude-opus-4-5-20251101)
 - Verified Tailwind build completes successfully (10KB output.css generated)
 - All 5 acceptance criteria verified and passing
 
+**Code Review Fixes (2025-12-02):**
+- Updated browserslist database (caniuse-lite)
+- Cleaned package.json: removed cruft fields (main, description, keywords, author, directories, type), added `build` and `watch` npm scripts
+- Created README.md with setup and development instructions
+- Fixed main.js: now auto-calls initialize() on module load (no dead code)
+
 ### File List
 
-- package.json (created)
+- .gitignore (created)
+- package.json (created, updated in code review)
 - package-lock.json (created)
 - tailwind.config.js (created)
 - index.html (created)
+- README.md (created in code review)
 - src/css/input.css (created)
-- src/js/main.js (created)
-- dist/output.css (generated)
+- src/js/main.js (created, updated in code review)
+- dist/output.css (generated, not tracked)
 - src/js/core/.gitkeep (created)
 - src/js/state/.gitkeep (created)
 - src/js/simulation/.gitkeep (created)
