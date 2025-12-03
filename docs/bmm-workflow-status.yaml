@@ -64,8 +64,9 @@ sprint-status:
       completed_date: '2025-12-03'
     '1.4':
       title: 'Time Controls'
-      status: review
+      status: complete
       story_file: 'docs/sprint-artifacts/1-4-time-controls.md'
+      completed_date: '2025-12-03'
     '1.5':
       title: 'Basic UI Shell & Layout'
       status: pending
@@ -80,5 +81,5 @@ sprint-status:
       status: pending
 
 # Next recommended workflows:
-# - code-review: Review Story 1.4 (Time Controls)
-# - dev-story: Execute Story 1.5 (Basic UI Shell & Layout)
+# - create-story: Draft Story 1.5 (Basic UI Shell & Layout)
+# - dev-story: Execute Story 1.5 after drafting

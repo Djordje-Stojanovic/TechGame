@@ -41,7 +41,7 @@ development_status:
   1-1-project-initialization: done
   1-2-core-state-structure: done
   1-3-game-loop-implementation: done
-  1-4-time-controls: review
+  1-4-time-controls: done
   1-5-basic-ui-shell-layout: backlog
   1-6-render-coordinator-with-diff-based-updates: backlog
   1-7-utility-functions: backlog

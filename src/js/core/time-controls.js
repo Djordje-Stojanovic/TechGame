@@ -4,11 +4,25 @@
 import { updateLoopSpeed, VALID_TICK_SPEEDS } from './game-loop.js';
 
 /**
+ * Validates that state has a time object.
+ * @param {Object} state - Game state object
+ * @param {string} fnName - Function name for error message
+ * @throws {Error} If state or state.time is missing
+ */
+function validateState(state, fnName) {
+  if (!state?.time) {
+    throw new Error(`${fnName} requires valid state with time object`);
+  }
+}
+
+/**
  * Pauses the game simulation.
  * @param {Object} state - Game state object
  * @returns {Object} Updated state
+ * @throws {Error} If state.time is missing
  */
 export function pauseGame(state) {
+  validateState(state, 'pauseGame');
   state.time = { ...state.time, paused: true };
   return state;
 }
@@ -17,8 +31,10 @@ export function pauseGame(state) {
  * Resumes the game simulation.
  * @param {Object} state - Game state object
  * @returns {Object} Updated state
+ * @throws {Error} If state.time is missing
  */
 export function playGame(state) {
+  validateState(state, 'playGame');
   state.time = { ...state.time, paused: false };
   return state;
 }
@@ -27,8 +43,10 @@ export function playGame(state) {
  * Toggles pause state (convenience for UI buttons).
  * @param {Object} state - Game state object
  * @returns {Object} Updated state
+ * @throws {Error} If state.time is missing
  */
 export function togglePause(state) {
+  validateState(state, 'togglePause');
   return state.time.paused ? playGame(state) : pauseGame(state);
 }
 
@@ -37,9 +55,10 @@ export function togglePause(state) {
  * @param {Object} state - Game state object
  * @param {number} speed - Tick speed (1, 2, or 4)
  * @returns {Object} Updated state
- * @throws {Error} If speed is not 1, 2, or 4
+ * @throws {Error} If state.time is missing or speed is not 1, 2, or 4
  */
 export function setSpeed(state, speed) {
+  validateState(state, 'setSpeed');
   if (!VALID_TICK_SPEEDS.includes(speed)) {
     throw new Error(`Invalid speed: ${speed}. Must be one of: ${VALID_TICK_SPEEDS.join(', ')}`);
   }
@@ -53,8 +72,13 @@ export function setSpeed(state, speed) {
  * Does NOT process intermediate ticks - just teleports time.
  * @param {Object} state - Game state object
  * @returns {Object} Updated state
+ * @throws {Error} If state.time is missing or lacks currentMonth/currentYear
  */
 export function skipToNextQuarter(state) {
+  validateState(state, 'skipToNextQuarter');
+  if (!state.time.currentMonth || !state.time.currentYear) {
+    throw new Error('skipToNextQuarter requires valid state.time with currentMonth and currentYear');
+  }
   const { currentMonth, currentYear } = state.time;
   const currentQuarter = Math.ceil(currentMonth / 3);
 
