@@ -40,7 +40,7 @@ development_status:
   epic-1: in-progress
   1-1-project-initialization: done
   1-2-core-state-structure: done
-  1-3-game-loop-implementation: backlog
+  1-3-game-loop-implementation: done
   1-4-time-controls: backlog
   1-5-basic-ui-shell-layout: backlog
   1-6-render-coordinator-with-diff-based-updates: backlog

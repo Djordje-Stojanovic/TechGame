@@ -59,7 +59,9 @@ sprint-status:
       completed_date: '2025-12-03'
     '1.3':
       title: 'Game Loop Implementation'
-      status: pending
+      status: complete
+      story_file: 'docs/sprint-artifacts/1-3-game-loop-implementation.md'
+      completed_date: '2025-12-03'
     '1.4':
       title: 'Time Controls'
       status: pending
