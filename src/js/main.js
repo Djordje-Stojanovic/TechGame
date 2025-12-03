@@ -1,7 +1,8 @@
 // TechGame - Main Entry Point
 
 import { createInitialState } from './state/game-state.js';
-import { startGameLoop, stopGameLoop, updateLoopSpeed } from './core/game-loop.js';
+import { startGameLoop, stopGameLoop, updateLoopSpeed, VALID_TICK_SPEEDS } from './core/game-loop.js';
+import { pauseGame, playGame, togglePause, setSpeed, skipToNextQuarter } from './core/time-controls.js';
 
 /**
  * Placeholder render function - logs time state to console.
@@ -40,7 +41,10 @@ export function initialize() {
 }
 
 // Re-export game loop controls for external use
-export { startGameLoop, stopGameLoop, updateLoopSpeed };
+export { startGameLoop, stopGameLoop, updateLoopSpeed, VALID_TICK_SPEEDS };
+
+// Re-export time controls for external use
+export { pauseGame, playGame, togglePause, setSpeed, skipToNextQuarter };
 
 // Export for manual initialization - no side effects on import
 // Call initialize() from index.html or app entry point

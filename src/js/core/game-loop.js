@@ -85,7 +85,7 @@ function tick() {
  * Valid tick speeds for the game loop.
  * @type {number[]}
  */
-const VALID_TICK_SPEEDS = [1, 2, 4];
+export const VALID_TICK_SPEEDS = [1, 2, 4];
 
 /**
  * Starts the game loop with configured tick speed.
