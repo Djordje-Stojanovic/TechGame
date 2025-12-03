@@ -2,11 +2,15 @@
   "name": "techgame",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "tailwindcss -i ./src/css/input.css -o ./dist/output.css",
-    "watch": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --watch"
+    "watch": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.18"
+    "tailwindcss": "^3.4.18",
+    "vitest": "^2.1.0"
   }
 }

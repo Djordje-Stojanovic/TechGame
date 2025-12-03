@@ -1,0 +1,21 @@
+# Auto-detect text files and normalize line endings
+* text=auto
+
+# JavaScript files
+*.js text eol=lf
+*.mjs text eol=lf
+*.cjs text eol=lf
+
+# Web files
+*.html text eol=lf
+*.css text eol=lf
+*.json text eol=lf
+
+# Config files
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+
+# Keep Windows batch files with CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
