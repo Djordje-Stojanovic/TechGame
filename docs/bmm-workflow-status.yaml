@@ -69,7 +69,9 @@ sprint-status:
       completed_date: '2025-12-03'
     '1.5':
       title: 'Basic UI Shell & Layout'
-      status: pending
+      status: complete
+      story_file: 'docs/sprint-artifacts/1-5-basic-ui-shell-and-layout.md'
+      completed_date: '2025-12-05'
     '1.6':
       title: 'Render Coordinator with Diff-Based Updates'
       status: pending

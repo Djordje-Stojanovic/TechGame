@@ -7,6 +7,31 @@
   <link rel="stylesheet" href="dist/output.css">
 </head>
 <body class="bg-surface-base text-text-primary min-h-screen">
+  <!-- Main Layout Grid -->
+  <div id="app" class="h-screen grid grid-rows-[auto_1fr_auto] grid-cols-[auto_1fr]">
+
+    <!-- Top Bar (spans full width) -->
+    <header id="top-bar" class="col-span-2 bg-surface-elevated border-b border-border-subtle">
+      <!-- Date display, time controls, company stats -->
+    </header>
+
+    <!-- Sidebar -->
+    <nav id="sidebar" class="bg-surface-elevated border-r border-border-subtle row-span-1">
+      <!-- Navigation items -->
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="overflow-auto">
+      <!-- Active view renders here -->
+    </main>
+
+    <!-- News Ticker (spans full width) -->
+    <footer id="news-ticker" class="col-span-2 bg-surface-elevated border-t border-border-subtle h-12">
+      <!-- News headlines -->
+    </footer>
+
+  </div>
+
   <script type="module">
     import { initialize } from './src/js/main.js';
     initialize();

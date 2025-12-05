@@ -3,17 +3,7 @@
 import { createInitialState } from './state/game-state.js';
 import { startGameLoop, stopGameLoop, updateLoopSpeed, VALID_TICK_SPEEDS } from './core/game-loop.js';
 import { pauseGame, playGame, togglePause, setSpeed, skipToNextQuarter } from './core/time-controls.js';
-
-/**
- * Placeholder render function - logs time state to console.
- * Will be replaced by actual UI rendering in Story 1.5/1.6.
- * @param {Object} state - Current game state
- */
-function render(state) {
-  console.log(
-    `H:${state.time.currentHour} D:${state.time.currentDay} M:${state.time.currentMonth} Q${state.time.currentQuarter} Y:${state.time.currentYear}`
-  );
-}
+import { render, initializeUI } from './ui/render.js';
 
 /**
  * Error handler for game loop errors.
@@ -32,6 +22,9 @@ export function initialize() {
   console.log('TechGame initialized');
   console.log('Initial state:', state);
   console.log('Year:', state.time.currentYear, 'Quarter:', state.time.currentQuarter);
+
+  // Initialize UI shell before starting game loop
+  initializeUI(state);
 
   // Start game loop (game starts paused per initial state)
   startGameLoop(state, render, handleGameError);
