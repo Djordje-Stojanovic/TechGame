@@ -3,9 +3,10 @@
 import { renderSidebar } from './components/sidebar.js';
 import { renderTopBar } from './components/top-bar.js';
 import { renderDashboard } from './panels/dashboard.js';
+import { renderPlaceholder } from './panels/placeholder.js';
 
 /**
- * Previous state reference for future diff-based rendering.
+ * Previous state reference for diff-based rendering.
  * @type {Object|null}
  */
 let prevState = null;
@@ -19,42 +20,87 @@ export function resetRenderState() {
 }
 
 /**
- * Main render function - coordinates all UI updates.
- * Currently renders all components; will be optimized for diff-based
- * updates in Story 1.6.
+ * Main render function - coordinates all UI updates using diff-based rendering.
+ * Only re-renders sections whose state objects have changed (by reference).
  * @param {Object} state - Current game state
  */
 export function render(state) {
+  const startTime = performance.now();
+
   // Get container references
   const topBar = document.getElementById('top-bar');
   const sidebar = document.getElementById('sidebar');
   const mainContent = document.getElementById('main-content');
 
-  // Render top bar every tick (shows time, which changes)
-  if (topBar) {
-    renderTopBar(topBar, state);
-  } else {
-    console.error('[UI ERROR] Top bar container #top-bar not found');
+  // Track what we render for debugging
+  const rendered = [];
+
+  // Initial render - render everything
+  const isInitialRender = !prevState;
+
+  // Time changed → re-render top bar only (reference comparison)
+  if (isInitialRender || state.time !== prevState?.time) {
+    if (topBar) {
+      renderTopBar(topBar, state);
+      rendered.push('topBar');
+    } else {
+      console.error('[UI ERROR] Top bar container #top-bar not found');
+    }
   }
 
-  // Sidebar only needs to render once (static for now)
-  // Will re-render when view changes in future stories
-  if (sidebar && !prevState) {
-    renderSidebar(sidebar, state?.ui?.currentView || 'dashboard');
-  } else if (!sidebar) {
-    console.error('[UI ERROR] Sidebar container #sidebar not found');
+  // UI state changed → re-render sidebar and check for view changes (reference comparison)
+  if (isInitialRender || state.ui !== prevState?.ui) {
+    if (sidebar) {
+      renderSidebar(sidebar, state?.ui?.currentView || 'dashboard');
+      rendered.push('sidebar');
+    } else {
+      console.error('[UI ERROR] Sidebar container #sidebar not found');
+    }
+
+    // View changed → re-render main content with appropriate panel
+    const viewChanged = isInitialRender ||
+      state.ui?.currentView !== prevState?.ui?.currentView;
+
+    if (viewChanged) {
+      if (mainContent) {
+        renderMainContent(mainContent, state);
+        rendered.push('mainContent');
+      } else {
+        console.error('[UI ERROR] Main content container #main-content not found');
+      }
+    }
   }
 
-  // Main content - renders dashboard (renders once for now)
-  // Will support view switching in future stories
-  if (mainContent && !prevState) {
-    renderDashboard(mainContent);
-  } else if (!mainContent) {
-    console.error('[UI ERROR] Main content container #main-content not found');
-  }
-
-  // Store for future diff comparison
+  // Store for next diff comparison (at END of render, not beginning)
   prevState = state;
+
+  // Performance logging - warn only when exceeding 60fps frame budget (16.67ms)
+  const duration = performance.now() - startTime;
+  if (duration > 16) {
+    console.warn(`[UI PERF] Render took ${duration.toFixed(2)}ms (exceeds 16ms frame budget)`);
+  }
+
+  // Debug logging - use console.debug for routine diff logging (filtered by default in DevTools)
+  if (rendered.length > 0) {
+    console.debug(`[UI] Diff render: ${rendered.join(', ')}`);
+  }
+}
+
+/**
+ * Renders the appropriate panel based on current view.
+ * @param {HTMLElement} container - The main content container
+ * @param {Object} state - Current game state
+ */
+function renderMainContent(container, state) {
+  const currentView = state?.ui?.currentView || 'dashboard';
+
+  // Explicit cases document known views; default handles any future/unknown views
+  if (currentView === 'dashboard') {
+    renderDashboard(container);
+  } else {
+    // All non-dashboard views use placeholder (market, company, design, intel, or future views)
+    renderPlaceholder(container, currentView);
+  }
 }
 
 /**

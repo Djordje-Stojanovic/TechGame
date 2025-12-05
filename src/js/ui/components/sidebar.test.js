@@ -87,4 +87,42 @@ describe('renderSidebar', () => {
     expect(buttons[3].getAttribute('data-view')).toBe('design');
     expect(buttons[4].getAttribute('data-view')).toBe('intel');
   });
+
+  describe('diff-based integration support (Story 1.6)', () => {
+    it('can be re-rendered safely with different active view', () => {
+      renderSidebar(container, 'dashboard');
+      expect(container.querySelector('[data-view="dashboard"]').classList.contains('border-accent')).toBe(true);
+
+      // Re-render with different active view
+      renderSidebar(container, 'market');
+      expect(container.querySelector('[data-view="market"]').classList.contains('border-accent')).toBe(true);
+      expect(container.querySelector('[data-view="dashboard"]').classList.contains('border-accent')).toBe(false);
+    });
+
+    it('updates active state correctly when view changes', () => {
+      // Initial render with dashboard active
+      renderSidebar(container, 'dashboard');
+
+      // Simulate view changes
+      renderSidebar(container, 'company');
+      let companyButton = container.querySelector('[data-view="company"]');
+      expect(companyButton.classList.contains('border-accent')).toBe(true);
+
+      renderSidebar(container, 'intel');
+      let intelButton = container.querySelector('[data-view="intel"]');
+      expect(intelButton.classList.contains('border-accent')).toBe(true);
+      companyButton = container.querySelector('[data-view="company"]');
+      expect(companyButton.classList.contains('border-accent')).toBe(false);
+    });
+
+    it('maintains correct structure after multiple re-renders', () => {
+      renderSidebar(container, 'dashboard');
+      renderSidebar(container, 'market');
+      renderSidebar(container, 'design');
+
+      // Still has exactly 5 nav items
+      const buttons = container.querySelectorAll('[data-view]');
+      expect(buttons.length).toBe(5);
+    });
+  });
 });
