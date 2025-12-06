@@ -44,7 +44,7 @@ development_status:
   1-4-time-controls: done
   1-5-basic-ui-shell-layout: done
   1-6-render-coordinator-with-diff-based-updates: done
-  1-7-utility-functions: backlog
+  1-7-utility-functions: done
   1-8-starting-data-constants: backlog
   epic-1-retrospective: optional
 

@@ -79,11 +79,14 @@ sprint-status:
       completed_date: '2025-12-05'
     '1.7':
       title: 'Utility Functions'
-      status: pending
+      status: complete
+      story_file: 'docs/sprint-artifacts/1-7-utility-functions.md'
+      completed_date: '2025-12-06'
+      implementation_notes: 'formatters.js + math.js with 146 new tests (312 total), all 21 ACs satisfied. Code review fixes: $0.01 min, 999T max cap, decimal rounding, floating point precision.'
     '1.8':
       title: 'Starting Data Constants'
       status: pending
 
 # Next recommended workflows:
-# - create-story: Draft Story 1.7 (Utility Functions)
-# - dev-story: Execute Story 1.7 after drafting
+# - dev-story: Execute Story 1.7 (Utility Functions) - READY FOR DEV
+# - create-story: Draft Story 1.8 (Starting Data Constants) after 1.7 is complete
