@@ -45,7 +45,7 @@ development_status:
   1-5-basic-ui-shell-layout: done
   1-6-render-coordinator-with-diff-based-updates: done
   1-7-utility-functions: done
-  1-8-starting-data-constants: backlog
+  1-8-starting-data-constants: done
   epic-1-retrospective: optional
 
   # Epic 2: The Living Market

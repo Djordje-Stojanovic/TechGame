@@ -1,7 +1,19 @@
 # Project Context - TechGame
-Updated: 2025-12-06 | Stories: 1.1-1.7 complete
+Updated: 2025-12-06 | Stories: 1.1-1.8 complete
 
 ## Module Exports
+
+### data/ (no dependencies - import from anywhere)
+```
+constants: HOURS_PER_DAY=24 | DAYS_PER_MONTH=30 | MONTHS_PER_YEAR=12 | MONTHS_PER_QUARTER=3 | DAYS_PER_QUARTER=90 | HOURS_PER_QUARTER=2160
+          TICK_SPEEDS=[1,2,4] | DEFAULT_TICK_SPEED=1 | STARTING_YEAR=2022 | STARTING_QUARTER=1 | STARTING_CASH=10M
+          VIEWS=['dashboard','market','design','competitors','financials'] | DEFAULT_VIEW='dashboard'
+          BUDGET_MAX_PRICE=299 | MIDRANGE_MAX_PRICE=599 | COMPANY_IDS | SEGMENT_KEYS
+market-data: USA_POPULATION_2022=332M | BASE_GPU_DEMAND_ANNUAL=50M | POPULATION_GROWTH_RATE=0.005 | GPU_DEMAND_GROWTH_RATE=0.03
+             MARKET_SEGMENTS{budget,midrange,highend} | getProductSegment(price)→segmentKey | calculateMarketDemand(year)→units
+competitor-data: COMPETITOR_STARTING_CASH{nvidia,amd,intel} | COMPETITOR_BRAND_COLORS{nvidia,amd,intel,player}
+                 STARTING_MARKET_SHARE{nvidia=0.8,amd=0.18,intel=0.02,player=0} | COMPETITOR_PROFILES | COMPETITOR_PLACEHOLDER_PRODUCTS
+```
 
 ### utils/ (no dependencies - import from anywhere)
 ```

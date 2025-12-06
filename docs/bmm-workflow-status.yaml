@@ -31,7 +31,7 @@ workflow_status:
     status: complete
     output_file: 'docs/implementation-readiness-report-2025-12-02.md'
     completed_date: '2025-12-02'
-    result: 'READY FOR IMPLEMENTATION'
+    result: 'ready for dev'
     summary:
       critical_issues: 0
       high_priority_concerns: 2
@@ -85,8 +85,11 @@ sprint-status:
       implementation_notes: 'formatters.js + math.js with 146 new tests (312 total), all 21 ACs satisfied. Code review fixes: $0.01 min, 999T max cap, decimal rounding, floating point precision.'
     '1.8':
       title: 'Starting Data Constants'
-      status: pending
+      status: complete
+      story_file: 'docs/sprint-artifacts/1-8-starting-data-constants.md'
+      completed_date: '2025-12-06'
+      implementation_notes: 'data/ layer with constants.js, market-data.js, competitor-data.js. 129 tests (441 total), all 21 ACs satisfied. Code review added negative price edge case test.'
 
 # Next recommended workflows:
-# - dev-story: Execute Story 1.7 (Utility Functions) - READY FOR DEV
-# - create-story: Draft Story 1.8 (Starting Data Constants) after 1.7 is complete
+# - epic-1-retrospective: Epic 1 complete! Run retrospective before starting Epic 2
+# - create-story: Draft Story 2.1 after retrospective
