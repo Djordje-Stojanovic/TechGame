@@ -5,6 +5,7 @@ import { startGameLoop, stopGameLoop, updateLoopSpeed, VALID_TICK_SPEEDS } from 
 import { pauseGame, playGame, togglePause, setSpeed, skipToNextQuarter } from './core/time-controls.js';
 import { render, initializeUI } from './ui/render.js';
 import { initKeyboardShortcuts } from './ui/components/top-bar.js';
+import { STARTING_PRODUCTS, getStartingProductIds } from './data/starting-products.js';
 
 /**
  * Error handler for game loop errors.
@@ -20,6 +21,15 @@ function handleGameError(error) {
  */
 export function initialize() {
   const state = createInitialState();
+
+  // Populate products from starting data (main.js can import from data/)
+  state.products = { ...state.products, ...STARTING_PRODUCTS };
+
+  // Link products to companies
+  state.companies.nvidia.products = getStartingProductIds('nvidia');
+  state.companies.amd.products = getStartingProductIds('amd');
+  state.companies.intel.products = getStartingProductIds('intel');
+
   console.log('TechGame initialized');
   console.log('Initial state:', state);
   console.log('Year:', state.time.currentYear, 'Quarter:', state.time.currentQuarter);

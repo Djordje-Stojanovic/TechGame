@@ -774,15 +774,16 @@ All FRs have clear architectural homes. Each FR category maps to specific files 
 
 ```javascript
 state.products = {
-  'nvidia-rtx-3080-2020q4': {
-    id: 'nvidia-rtx-3080-2020q4',
+  'nvidia-rtx-3080-2020q3': {
+    id: 'nvidia-rtx-3080-2020q3',
     company: 'nvidia',
     name: 'RTX 3080',
-    launchDate: { day: 1, month: 10, year: 2020 },
-    discontinuedDate: null, // or { day, month, year }
+    launchDate: { quarter: 3, year: 2020 },
+    discontinuedDate: null, // or { quarter, year }
     specs: { cores: 8704, vram: 10, clockSpeed: 1.71, tdp: 320, dieSize: 628, nm: 8 },
     msrp: 699,
-    manufacturingCost: 320
+    manufacturingCost: 250,
+    status: 'active' // 'active' or 'discontinued'
   }
   // All products ever created stay here forever (even bankrupt companies)
 };

@@ -100,7 +100,20 @@ sprint-status:
       story_file: 'docs/sprint-artifacts/2-1-time-control-ui-bar.md'
       completed_date: '2025-12-07'
       implementation_notes: 'top-bar.js enhanced with time controls (date, play/pause, speed), keyboard shortcuts (Space, 1/2/4), detailed time display (M/D/H). Code review fixes: formatDetailedTime() zero-padding for consistent width. 501 tests total.'
+    '2.2':
+      title: 'Competitor Starting Products'
+      status: complete
+      story_file: 'docs/sprint-artifacts/2-2-competitor-starting-products.md'
+      completed_date: '2025-12-07'
+      implementation_notes: 'starting-products.js with 9 GPU products (NVIDIA 4, AMD 3, Intel 2). Products initialized in main.js per layer rules. Code review fixes: DOM ID mismatch in test (main-panel→main-content), added stopGameLoop/cleanupKeyboardShortcuts cleanup. 567 tests total.'
+
+# PRD updated 2025-12-07: Added Phase 4-7+ roadmap
+# - Phase 4: Memory & Storage (SK Hynix, Micron, DRAM, GDDR, HBM, SSD, HDD)
+# - Phase 5: Components & Systems (PSU, motherboards, cooling, full PC builds)
+# - Phase 6: OEM & Consumer (phones, consoles, laptops, cloud compute)
+# - Phase 7+: Complete Tech Sandbox (M&A, geopolitics, stock market, play any role)
+# - Added "Simulation Realism Principles" - real physics, no hardcoded margins, full freedom
 
 # Next recommended workflows:
-# - create-story: Draft Story 2.2
-# - dev-story: Implement next story
+# - dev-story: Implement Story 2.2
+# - create-story: Draft Story 2.3

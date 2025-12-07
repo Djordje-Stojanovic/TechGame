@@ -78,11 +78,18 @@ export const COMPETITOR_PROFILES = {
 };
 
 /**
- * Placeholder for competitor starting products.
- * Populated in Story 2.2 with RTX 30 series, RX 6000 series, Arc A-series.
+ * @deprecated Use STARTING_PRODUCTS from './starting-products.js' instead.
+ * This placeholder is kept for backwards compatibility only.
+ *
+ * Actual products are now in starting-products.js:
+ * - NVIDIA: RTX 3090, 3080, 3070, 3060
+ * - AMD: RX 6900 XT, 6800 XT, 6700 XT
+ * - Intel: Arc A770, A750
+ *
+ * @see ./starting-products.js for full product data
  */
 export const COMPETITOR_PLACEHOLDER_PRODUCTS = {
-  nvidia: [], // RTX 3090, 3080, 3070, 3060 added in Story 2.2
-  amd: [],    // RX 6900 XT, 6800 XT, 6700 XT added in Story 2.2
-  intel: []   // Arc A770, A750 added in Story 2.2
+  nvidia: [],
+  amd: [],
+  intel: []
 };

@@ -51,7 +51,7 @@ development_status:
   # Epic 2: The Living Market
   epic-2: in-progress
   2-1-time-control-ui-bar: done
-  2-2-competitor-starting-products: backlog
+  2-2-competitor-starting-products: done
   2-3-market-share-state-initialization: backlog
   2-4-the-crushing-chart-svg-line-chart: backlog
   2-5-chart-real-time-updates: backlog

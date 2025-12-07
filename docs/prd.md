@@ -98,21 +98,88 @@ If it ships with a bug, it failed.
 
 ### Growth Features (Post-MVP)
 
-**Phase 2 - Datacenter Expansion:**
+**Phase 2 - Datacenter & CPU Expansion:**
 - Datacenter GPU market with enterprise demand
 - CPU design (compete with Intel, AMD processors)
 - TPU / AI accelerator design
 - Enterprise customers with different needs
+- Server/workstation market segments
 
-### Vision (Future)
+**Phase 3 - Foundry & Manufacturing:**
+- Foundries (build fabs, compete with TSMC, Samsung, Intel Foundry, GlobalFoundries)
+- Real semiconductor economics:
+  - Wafer costs, dies per wafer, yield rates
+  - Yield curves (new nodes start ~50-60%, improve over time)
+  - Fab capacity constraints (wafers/month)
+  - Node development R&D (years of research, billions in investment)
+- Flexible process nodes (not just 3/4/5nm - any value like 3.3nm, 2.83nm)
+- Freedom to skip nodes (e.g., skip 4nm, go direct to 3nm)
+- Vertical integration: design company can build own foundry mid-game
 
-**Phase 3+ - Full Ecosystem:**
-- Foundries (build fabs, compete with TSMC, Samsung, Intel Foundry)
-- OEM products (phones, consoles, PCs, laptops)
+**Phase 4 - Memory & Storage:**
+- Memory design & manufacturing:
+  - DRAM (DDR4, DDR5, DDR6+)
+  - GDDR (GDDR6, GDDR6X, GDDR7+)
+  - HBM (HBM2, HBM3, HBM4+)
+- Memory companies: SK Hynix, Micron, Samsung Memory
+- Storage products:
+  - SSD design (NAND flash, controllers)
+  - HDD design (for completeness)
+  - NVMe controllers
+- Memory bandwidth physics: bus width × memory clock × channels × type efficiency
+- Storage performance: IOPS, sequential read/write, latency
+
+**Phase 5 - Components & Systems:**
+- PSU design (efficiency ratings, wattage tiers)
+- Motherboard design (chipsets, form factors)
+- Cooling solutions (air, AIO, custom loop)
+- PC case design (form factors, airflow)
+- Full system integration: build complete PCs, workstations, servers
+
+**Phase 6 - OEM & Consumer Products:**
+- OEM products (phones, tablets, consoles, laptops, desktops)
+- Console partnerships (Sony, Microsoft, Nintendo)
+- Cloud gaming hardware (Google Stadia-style, Xbox Cloud, GeForce Now)
+- Cloud compute (AWS, Azure, GCP as customers AND competitors)
+- Laptop/mobile GPU variants (power-limited designs)
+
+### Ultimate Vision
+
+**Phase 7+ - Complete Tech Industry Sandbox:**
 - Software / OS design
 - Joint ventures and co-branded products
 - IP licensing and design royalties
-- The complete tech industry sandbox
+- Acquisitions and mergers
+- Global market (expand beyond USA)
+- Geopolitics (trade wars, export controls, fab locations)
+- Stock market / IPO mechanics
+- Any role in the value chain: fabless designer, IDM, foundry, memory, OEM, or conglomerate
+- Start anywhere, expand anywhere: GPU company adds foundry, foundry adds chip design, etc.
+
+### Simulation Realism Principles (All Phases)
+
+These principles apply across ALL phases as features are added:
+
+1. **Real Physics** - All calculations based on actual engineering relationships
+   - Memory bandwidth = bus width × clock × channels × efficiency factor
+   - Die cost = f(wafer cost, die size, yield rate, defect density)
+   - Power = voltage² × capacitance × frequency (simplified but real)
+
+2. **Real Economics** - Market determines outcomes, not arbitrary constraints
+   - No hardcoded margins - price whatever you want, market decides if it sells
+   - Competitors use same simulation rules as player
+   - Supply/demand dynamics affect pricing
+
+3. **Real Freedom** - Player chooses their path
+   - Skip process nodes, target custom nodes (3.71nm if you want)
+   - Vertical integration at any time
+   - Enter/exit any market segment
+   - R&D priorities fully controllable
+
+4. **Real Companies** - Accurate starting positions, realistic behavior
+   - NVIDIA, AMD, Intel, TSMC, Samsung, SK Hynix, Micron, etc.
+   - Financials ballpark accurate to real world
+   - AI uses same constraints as player
 
 ## User Journeys
 

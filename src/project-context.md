@@ -1,5 +1,5 @@
 # Project Context - TechGame
-Updated: 2025-12-07 | Stories: 1.1-1.8, 2.1 complete
+Updated: 2025-12-07 | Stories: 1.1-1.8, 2.1-2.2 complete
 
 ## Module Exports
 
@@ -12,7 +12,9 @@ constants: HOURS_PER_DAY=24 | DAYS_PER_MONTH=30 | MONTHS_PER_YEAR=12 | MONTHS_PE
 market-data: USA_POPULATION_2022=332M | BASE_GPU_DEMAND_ANNUAL=50M | POPULATION_GROWTH_RATE=0.005 | GPU_DEMAND_GROWTH_RATE=0.03
              MARKET_SEGMENTS{budget,midrange,highend} | getProductSegment(price)→segmentKey | calculateMarketDemand(year)→units
 competitor-data: COMPETITOR_STARTING_CASH{nvidia,amd,intel} | COMPETITOR_BRAND_COLORS{nvidia,amd,intel,player}
-                 STARTING_MARKET_SHARE{nvidia=0.8,amd=0.18,intel=0.02,player=0} | COMPETITOR_PROFILES | COMPETITOR_PLACEHOLDER_PRODUCTS
+                 STARTING_MARKET_SHARE{nvidia=0.8,amd=0.18,intel=0.02,player=0} | COMPETITOR_PROFILES | COMPETITOR_PLACEHOLDER_PRODUCTS(deprecated)
+starting-products: NVIDIA_PRODUCTS[4] | AMD_PRODUCTS[3] | INTEL_PRODUCTS[2] | STARTING_PRODUCTS{9 products keyed by ID}
+                   getStartingProductIds(company)→string[] | Product ID format: {company}-{slug}-{year}q{quarter}
 ```
 
 ### utils/ (no dependencies - import from anywhere)
@@ -49,9 +51,17 @@ state.time: {currentHour,currentDay,currentMonth,currentQuarter,currentYear,tick
 state.player: {name,cash,products[],rdProjects[],marketingBudget}
 state.companies.{nvidia|amd|intel}: {name,cash,products[],rdProjects[],marketingBudget,rdFocus}
 state.market: {totalDemand,segments:{budget,midrange,highend},preferences}
-state.products: {} // key: "{company}-{slug}-{quarter}"
+state.products: {} // key: "{company}-{slug}-{year}q{quarter}" - populated by main.js from starting-products.js
 state.history: {daily[],events[]}
 state.ui: {currentView,selectedProduct,gpuDesigner:{specs:{cores,vram,clockSpeed,tdp,dieSize,nm},name,price}}
+```
+
+## Product Structure
+```
+Product: {id,company,name,launchDate:{quarter,year},discontinuedDate,specs,msrp,manufacturingCost,status}
+ProductSpecs: {cores,vram,clockSpeed,tdp,dieSize,nm}
+Product ID format: {company}-{slug}-{year}q{quarter} (e.g., 'nvidia-rtx-3080-2020q3')
+Note: Products initialized in main.js (NOT game-state.js - layer rules!)
 ```
 
 ## Constants
