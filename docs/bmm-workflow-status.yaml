@@ -1,3 +1,8 @@
+# Most important thing for Scrum Master and Developers: C:\AI\TechGame\src\project-context.md
+# Never forget to read this single small file and understand it.
+# It shows all utilities that are avaliable for this project.
+# This file is to be kept up to date at all times per instruction of the Almighty Djord. :)
+
 # BMM Workflow Status
 # Tracks completed workflows and their outputs
 
@@ -43,9 +48,9 @@ workflow_status:
 # Phase 4 (Implementation) IN PROGRESS
 
 sprint-status:
-  current_sprint: 1
-  epic: 1
-  epic_title: 'Foundation & Core Systems'
+  current_sprint: 2
+  epic: 2
+  epic_title: 'The Living Market'
   stories:
     '1.1':
       title: 'Project Initialization'
@@ -89,7 +94,13 @@ sprint-status:
       story_file: 'docs/sprint-artifacts/1-8-starting-data-constants.md'
       completed_date: '2025-12-06'
       implementation_notes: 'data/ layer with constants.js, market-data.js, competitor-data.js. 129 tests (441 total), all 21 ACs satisfied. Code review added negative price edge case test.'
+    '2.1':
+      title: 'Time Control UI Bar'
+      status: complete
+      story_file: 'docs/sprint-artifacts/2-1-time-control-ui-bar.md'
+      completed_date: '2025-12-07'
+      implementation_notes: 'top-bar.js enhanced with time controls (date, play/pause, speed), keyboard shortcuts (Space, 1/2/4), detailed time display (M/D/H). Code review fixes: formatDetailedTime() zero-padding for consistent width. 501 tests total.'
 
 # Next recommended workflows:
-# - epic-1-retrospective: Epic 1 complete! Run retrospective before starting Epic 2
-# - create-story: Draft Story 2.1 after retrospective
+# - create-story: Draft Story 2.2
+# - dev-story: Implement next story

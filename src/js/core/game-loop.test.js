@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { startGameLoop, stopGameLoop, updateLoopSpeed } from './game-loop.js';
+import { startGameLoop, stopGameLoop, updateLoopSpeed, VALID_TICK_SPEEDS } from './game-loop.js';
 import { createInitialState } from '../state/game-state.js';
+import { TICK_SPEEDS, HOURS_PER_DAY, DAYS_PER_MONTH, MONTHS_PER_YEAR } from '../data/constants.js';
 
 describe('game-loop', () => {
   let state;
@@ -40,12 +41,13 @@ describe('game-loop', () => {
   });
 
   // PAUSE BEHAVIOR
-  it('calls render but skips time advancement when paused', () => {
+  it('skips render and time advancement when paused (saves CPU)', () => {
     state.time.paused = true;
     const initialHour = state.time.currentHour;
     startGameLoop(state, renderFn);
     vi.advanceTimersByTime(1000);
-    expect(renderFn).toHaveBeenCalled();
+    // When paused, don't waste CPU cycles rendering
+    expect(renderFn).not.toHaveBeenCalled();
     expect(state.time.currentHour).toBe(initialHour);
   });
 
@@ -231,5 +233,90 @@ describe('game-loop', () => {
   it('accepts valid tickSpeed of 4', () => {
     state.time.tickSpeed = 4;
     expect(() => startGameLoop(state, renderFn)).not.toThrow();
+  });
+
+  // CONSTANTS SYNC VERIFICATION (Issue 4 - duplicate constants)
+  // These tests ensure game-loop's local constants stay in sync with data/constants.js
+  describe('constants sync with data/constants.js', () => {
+    it('VALID_TICK_SPEEDS matches TICK_SPEEDS from constants.js', () => {
+      expect(VALID_TICK_SPEEDS).toEqual(TICK_SPEEDS);
+    });
+
+    it('uses correct HOURS_PER_DAY (24) for hour rollover', () => {
+      // Verify game-loop uses 24 hours per day (matching constants.js)
+      expect(HOURS_PER_DAY).toBe(24);
+      state.time.currentHour = 23;
+      startGameLoop(state, renderFn);
+      vi.advanceTimersByTime(1000);
+      expect(state.time.currentHour).toBe(0); // Should have rolled over at 24
+    });
+
+    it('uses correct DAYS_PER_MONTH (30) for day rollover', () => {
+      expect(DAYS_PER_MONTH).toBe(30);
+      state.time.currentHour = 23;
+      state.time.currentDay = 30;
+      startGameLoop(state, renderFn);
+      vi.advanceTimersByTime(1000);
+      expect(state.time.currentDay).toBe(1); // Should have rolled over after day 30
+    });
+
+    it('uses correct MONTHS_PER_YEAR (12) for month rollover', () => {
+      expect(MONTHS_PER_YEAR).toBe(12);
+      state.time.currentHour = 23;
+      state.time.currentDay = 30;
+      state.time.currentMonth = 12;
+      startGameLoop(state, renderFn);
+      vi.advanceTimersByTime(1000);
+      expect(state.time.currentMonth).toBe(1); // Should have rolled over after month 12
+    });
+  });
+
+  // AC 11 TEST: Time advances faster at higher speeds
+  describe('speed affects time advancement rate (AC 11)', () => {
+    it('at 4x speed, time advances 4 times faster than at 1x over same real time', () => {
+      // At 1x speed, 4 seconds = 4 ticks = 4 hours
+      state.time.tickSpeed = 1;
+      state.time.currentHour = 0;
+      startGameLoop(state, renderFn);
+      vi.advanceTimersByTime(4000);
+      const hoursAt1x = state.time.currentHour;
+      stopGameLoop();
+
+      // At 4x speed, 4 seconds = 16 ticks = 16 hours
+      const state4x = createInitialState();
+      state4x.time.paused = false;
+      state4x.time.tickSpeed = 4;
+      state4x.time.currentHour = 0;
+      startGameLoop(state4x, renderFn);
+      vi.advanceTimersByTime(4000);
+      const hoursAt4x = state4x.time.currentHour;
+
+      expect(hoursAt1x).toBe(4);
+      expect(hoursAt4x).toBe(16);
+      expect(hoursAt4x).toBe(hoursAt1x * 4);
+    });
+
+    it('at 2x speed, time advances 2 times faster than at 1x', () => {
+      // At 1x speed, 2 seconds = 2 ticks = 2 hours
+      state.time.tickSpeed = 1;
+      state.time.currentHour = 0;
+      startGameLoop(state, renderFn);
+      vi.advanceTimersByTime(2000);
+      const hoursAt1x = state.time.currentHour;
+      stopGameLoop();
+
+      // At 2x speed, 2 seconds = 4 ticks = 4 hours
+      const state2x = createInitialState();
+      state2x.time.paused = false;
+      state2x.time.tickSpeed = 2;
+      state2x.time.currentHour = 0;
+      startGameLoop(state2x, renderFn);
+      vi.advanceTimersByTime(2000);
+      const hoursAt2x = state2x.time.currentHour;
+
+      expect(hoursAt1x).toBe(2);
+      expect(hoursAt2x).toBe(4);
+      expect(hoursAt2x).toBe(hoursAt1x * 2);
+    });
   });
 });

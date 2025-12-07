@@ -92,14 +92,17 @@ describe('render', () => {
       expect(document.getElementById('top-bar').textContent).toContain('(PAUSED)');
     });
 
-    it('hides (PAUSED) indicator when game is not paused', () => {
+    it('hides (PAUSED) indicator visually when game is not paused (opacity-0)', () => {
       const state = {
         time: { currentQuarter: 2, currentYear: 2023, paused: false },
         ui: { currentView: 'dashboard' }
       };
       render(state);
 
-      expect(document.getElementById('top-bar').textContent).not.toContain('(PAUSED)');
+      // PAUSED indicator is always in DOM for smooth transitions, but visually hidden
+      const pausedIndicator = document.querySelector('[data-testid="paused-indicator"]');
+      expect(pausedIndicator).not.toBeNull();
+      expect(pausedIndicator.className).toContain('opacity-0');
     });
 
     it('renders sidebar with all 5 nav items', () => {
@@ -255,7 +258,9 @@ describe('render', () => {
       const state2 = { time: { currentQuarter: 2, currentYear: 2022, paused: false }, ui: { currentView: 'dashboard' } };
       render(state2);
       expect(document.getElementById('top-bar').textContent).toContain('Q2 2022');
-      expect(document.getElementById('top-bar').textContent).not.toContain('(PAUSED)');
+      // PAUSED indicator is always in DOM for smooth transitions, but visually hidden
+      const pausedIndicator = document.querySelector('[data-testid="paused-indicator"]');
+      expect(pausedIndicator.className).toContain('opacity-0');
     });
 
     it('preserves sidebar container element through re-renders', () => {

@@ -4,6 +4,7 @@ import { createInitialState } from './state/game-state.js';
 import { startGameLoop, stopGameLoop, updateLoopSpeed, VALID_TICK_SPEEDS } from './core/game-loop.js';
 import { pauseGame, playGame, togglePause, setSpeed, skipToNextQuarter } from './core/time-controls.js';
 import { render, initializeUI } from './ui/render.js';
+import { initKeyboardShortcuts } from './ui/components/top-bar.js';
 
 /**
  * Error handler for game loop errors.
@@ -29,6 +30,9 @@ export function initialize() {
   // Start game loop (game starts paused per initial state)
   startGameLoop(state, render, handleGameError);
   console.log('Game loop started (paused)');
+
+  // Initialize keyboard shortcuts for time controls
+  initKeyboardShortcuts(state, render);
 
   return state;
 }

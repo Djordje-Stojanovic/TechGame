@@ -1,6 +1,9 @@
 // src/js/core/game-loop.js
 // Game loop implementation with configurable tick speed
 
+// Time constants - duplicated from data/constants.js due to layer rules
+// (core/ can only import from state/, not data/)
+// IMPORTANT: Keep in sync with data/constants.js - verified by test
 const HOURS_PER_DAY = 24;
 const DAYS_PER_MONTH = 30;
 const MONTHS_PER_YEAR = 12;
@@ -60,8 +63,7 @@ function showErrorModal(message) {
  */
 function tick() {
   if (currentState.time.paused) {
-    if (renderCallback) renderCallback(currentState);
-    return;
+    return; // Don't advance time or render when paused
   }
 
   try {
@@ -83,6 +85,8 @@ function tick() {
 
 /**
  * Valid tick speeds for the game loop.
+ * Duplicated from data/constants.js due to layer rules (core cannot import data).
+ * IMPORTANT: Keep in sync with TICK_SPEEDS in data/constants.js - verified by test.
  * @type {number[]}
  */
 export const VALID_TICK_SPEEDS = [1, 2, 4];

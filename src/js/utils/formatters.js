@@ -137,6 +137,33 @@ export function formatDate(time) {
 }
 
 /**
+ * Formats game time with full detail (month, day, hour).
+ * Useful for seeing time progression within a quarter.
+ * @param {Object} time - Time object from state
+ * @param {number} time.currentMonth - Month (1-12)
+ * @param {number} time.currentDay - Day (1-30)
+ * @param {number} time.currentHour - Hour (0-23)
+ * @returns {string} Formatted time like "M1 D15 H08", or "---" for invalid input
+ *
+ * @example
+ * formatDetailedTime({ currentMonth: 3, currentDay: 15, currentHour: 8 }) // "M3 D15 H08"
+ * formatDetailedTime({ currentMonth: 12, currentDay: 30, currentHour: 23 }) // "M12 D30 H23"
+ * formatDetailedTime(null) // "---"
+ */
+export function formatDetailedTime(time) {
+  if (!time ||
+      typeof time.currentMonth !== 'number' ||
+      typeof time.currentDay !== 'number' ||
+      typeof time.currentHour !== 'number') {
+    return '---';
+  }
+  const month = String(time.currentMonth).padStart(2, '0');
+  const day = String(time.currentDay).padStart(2, '0');
+  const hour = String(time.currentHour).padStart(2, '0');
+  return `M${month} D${day} H${hour}`;
+}
+
+/**
  * Formats a number with smart abbreviation (no currency symbol).
  * Uses T for trillions, B for billions, M for millions.
  * Useful for unit counts like "1.5M units sold".

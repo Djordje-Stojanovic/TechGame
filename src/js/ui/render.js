@@ -6,17 +6,28 @@ import { renderDashboard } from './panels/dashboard.js';
 import { renderPlaceholder } from './panels/placeholder.js';
 
 /**
- * Previous state reference for diff-based rendering.
- * @type {Object|null}
+ * Previous state references for diff-based rendering.
+ * We store individual sub-object references, not the whole state,
+ * because storing `prevState = state` would mean both point to the
+ * same object, and changes to state.time would also change prevState.time.
+ * @type {Object}
  */
-let prevState = null;
+let prevRefs = {
+  time: null,
+  ui: null,
+  currentView: null
+};
 
 /**
  * Resets the render state. Used for test isolation.
  * Call this in beforeEach() of test files to ensure clean state.
  */
 export function resetRenderState() {
-  prevState = null;
+  prevRefs = {
+    time: null,
+    ui: null,
+    currentView: null
+  };
 }
 
 /**
@@ -36,12 +47,13 @@ export function render(state) {
   const rendered = [];
 
   // Initial render - render everything
-  const isInitialRender = !prevState;
+  const isInitialRender = prevRefs.time === null;
 
   // Time changed → re-render top bar only (reference comparison)
-  if (isInitialRender || state.time !== prevState?.time) {
+  if (isInitialRender || state.time !== prevRefs.time) {
     if (topBar) {
-      renderTopBar(topBar, state);
+      // Pass render function on first call to avoid circular import in top-bar.js
+      renderTopBar(topBar, state, isInitialRender ? render : undefined);
       rendered.push('topBar');
     } else {
       console.error('[UI ERROR] Top bar container #top-bar not found');
@@ -49,7 +61,7 @@ export function render(state) {
   }
 
   // UI state changed → re-render sidebar and check for view changes (reference comparison)
-  if (isInitialRender || state.ui !== prevState?.ui) {
+  if (isInitialRender || state.ui !== prevRefs.ui) {
     if (sidebar) {
       renderSidebar(sidebar, state?.ui?.currentView || 'dashboard');
       rendered.push('sidebar');
@@ -59,7 +71,7 @@ export function render(state) {
 
     // View changed → re-render main content with appropriate panel
     const viewChanged = isInitialRender ||
-      state.ui?.currentView !== prevState?.ui?.currentView;
+      state.ui?.currentView !== prevRefs.currentView;
 
     if (viewChanged) {
       if (mainContent) {
@@ -71,8 +83,11 @@ export function render(state) {
     }
   }
 
-  // Store for next diff comparison (at END of render, not beginning)
-  prevState = state;
+  // Store references for next diff comparison (at END of render, not beginning)
+  // We store the sub-object references directly, not the parent state object
+  prevRefs.time = state.time;
+  prevRefs.ui = state.ui;
+  prevRefs.currentView = state.ui?.currentView;
 
   // Performance logging - warn only when exceeding 60fps frame budget (16.67ms)
   const duration = performance.now() - startTime;

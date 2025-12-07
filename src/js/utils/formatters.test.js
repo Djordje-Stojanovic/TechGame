@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { formatCurrency, formatPercent, formatDate, formatNumber } from './formatters.js';
+import { formatCurrency, formatPercent, formatDate, formatDetailedTime, formatNumber } from './formatters.js';
 
 describe('formatCurrency', () => {
   // AC 3: Trillion support (late-game)
@@ -364,6 +364,64 @@ describe('formatDate', () => {
 
     it('returns --- for non-number year', () => {
       expect(formatDate({ currentQuarter: 1, currentYear: '2022' })).toBe('---');
+    });
+  });
+});
+
+// Detailed time formatting (Story 2.1 enhancement)
+describe('formatDetailedTime', () => {
+  it('formats M01 D01 H00 correctly (initial state)', () => {
+    expect(formatDetailedTime({ currentMonth: 1, currentDay: 1, currentHour: 0 })).toBe('M01 D01 H00');
+  });
+
+  it('formats M03 D15 H08 correctly', () => {
+    expect(formatDetailedTime({ currentMonth: 3, currentDay: 15, currentHour: 8 })).toBe('M03 D15 H08');
+  });
+
+  it('formats M12 D30 H23 correctly (end of year)', () => {
+    expect(formatDetailedTime({ currentMonth: 12, currentDay: 30, currentHour: 23 })).toBe('M12 D30 H23');
+  });
+
+  it('pads single-digit months with leading zero', () => {
+    expect(formatDetailedTime({ currentMonth: 1, currentDay: 15, currentHour: 12 })).toBe('M01 D15 H12');
+    expect(formatDetailedTime({ currentMonth: 9, currentDay: 15, currentHour: 12 })).toBe('M09 D15 H12');
+  });
+
+  it('pads single-digit days with leading zero', () => {
+    expect(formatDetailedTime({ currentMonth: 1, currentDay: 5, currentHour: 12 })).toBe('M01 D05 H12');
+  });
+
+  it('pads single-digit hours with leading zero', () => {
+    expect(formatDetailedTime({ currentMonth: 6, currentDay: 20, currentHour: 3 })).toBe('M06 D20 H03');
+  });
+
+  describe('invalid input handling', () => {
+    it('returns --- for null', () => {
+      expect(formatDetailedTime(null)).toBe('---');
+    });
+
+    it('returns --- for undefined', () => {
+      expect(formatDetailedTime(undefined)).toBe('---');
+    });
+
+    it('returns --- for empty object', () => {
+      expect(formatDetailedTime({})).toBe('---');
+    });
+
+    it('returns --- for missing currentMonth', () => {
+      expect(formatDetailedTime({ currentDay: 1, currentHour: 0 })).toBe('---');
+    });
+
+    it('returns --- for missing currentDay', () => {
+      expect(formatDetailedTime({ currentMonth: 1, currentHour: 0 })).toBe('---');
+    });
+
+    it('returns --- for missing currentHour', () => {
+      expect(formatDetailedTime({ currentMonth: 1, currentDay: 1 })).toBe('---');
+    });
+
+    it('returns --- for non-number month', () => {
+      expect(formatDetailedTime({ currentMonth: 'Jan', currentDay: 1, currentHour: 0 })).toBe('---');
     });
   });
 });

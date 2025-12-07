@@ -1,5 +1,5 @@
 # Project Context - TechGame
-Updated: 2025-12-06 | Stories: 1.1-1.8 complete
+Updated: 2025-12-07 | Stories: 1.1-1.8, 2.1 complete
 
 ## Module Exports
 
@@ -17,8 +17,9 @@ competitor-data: COMPETITOR_STARTING_CASH{nvidia,amd,intel} | COMPETITOR_BRAND_C
 
 ### utils/ (no dependencies - import from anywhere)
 ```
-formatters: formatCurrency(n)→"$1.23M" | formatPercent(n,{showSign?,decimals?})→"+12.34%" | formatDate({currentQuarter,currentYear})→"Q1 2022" | formatNumber(n)→"1.50M"
+formatters: formatCurrency(n)→"$1.23M" | formatPercent(n,{showSign?,decimals?})→"+12.34%" | formatDate({currentQuarter,currentYear})→"Q1 2022" | formatDetailedTime({currentMonth,currentDay,currentHour})→"M03 D15 H08" | formatNumber(n)→"1.50M"
   - Currency/Number: min $0.01, max 999.99T, rounds to 2 decimals for small values
+  - formatDetailedTime: Shows time progression within quarters (month, day, hour) - all values zero-padded to 2 digits
 math: clamp(val,min,max) | lerp(start,end,t) | randomInRange(min,max) | roundTo(val,decimals)
 ```
 
@@ -36,7 +37,7 @@ time-controls: pauseGame(state) | playGame(state) | togglePause(state) | setSpee
 ### ui/ (imports: state,core,utils)
 ```
 render: render(state) | initializeUI(state) | resetRenderState()
-components/top-bar: renderTopBar(container,state)
+components/top-bar: renderTopBar(container,state,renderFn?) | initKeyboardShortcuts(state,renderFn) | cleanupKeyboardShortcuts()
 components/sidebar: renderSidebar(container,activeView?)
 panels/dashboard: renderDashboard(container)
 panels/placeholder: renderPlaceholder(container,viewName)
@@ -58,6 +59,13 @@ state.ui: {currentView,selectedProduct,gpuDesigner:{specs:{cores,vram,clockSpeed
 Start: 2022 Q1 | Ticks: 1,2,4/sec | Views: dashboard,market,design,competitors,financials
 Segments: budget($0-299), midrange($300-599), highend($600+)
 Cash: Player=$10M, NVIDIA=$15B, AMD=$3B, Intel=$25B
+```
+
+## Keyboard Controls
+```
+Space: Toggle pause/play
+1/2/4: Set simulation speed (1x, 2x, 4x ticks/sec)
+Note: Shortcuts ignored when typing in input/textarea fields
 ```
 
 ## Layer Rules
