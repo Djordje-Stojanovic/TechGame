@@ -6,6 +6,8 @@ import { pauseGame, playGame, togglePause, setSpeed, skipToNextQuarter } from '.
 import { render, initializeUI } from './ui/render.js';
 import { initKeyboardShortcuts } from './ui/components/top-bar.js';
 import { STARTING_PRODUCTS, getStartingProductIds } from './data/starting-products.js';
+import { calculateMarketDemand } from './data/market-data.js';
+import { initializeHistory } from './simulation/history-init.js';
 
 /**
  * Error handler for game loop errors.
@@ -29,6 +31,12 @@ export function initialize() {
   state.companies.nvidia.products = getStartingProductIds('nvidia');
   state.companies.amd.products = getStartingProductIds('amd');
   state.companies.intel.products = getStartingProductIds('intel');
+
+  // Set market demand based on current year
+  state.market.totalDemand = calculateMarketDemand(state.time.currentYear);
+
+  // Initialize history with Day 1 data
+  initializeHistory(state);
 
   console.log('TechGame initialized');
   console.log('Initial state:', state);

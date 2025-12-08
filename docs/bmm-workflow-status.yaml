@@ -106,6 +106,12 @@ sprint-status:
       story_file: 'docs/sprint-artifacts/2-2-competitor-starting-products.md'
       completed_date: '2025-12-07'
       implementation_notes: 'starting-products.js with 9 GPU products (NVIDIA 4, AMD 3, Intel 2). Products initialized in main.js per layer rules. Code review fixes: DOM ID mismatch in test (main-panel→main-content), added stopGameLoop/cleanupKeyboardShortcuts cleanup. 567 tests total.'
+    '2.3':
+      title: 'Market Share State Initialization'
+      status: complete
+      story_file: 'docs/sprint-artifacts/2-3-market-share-state-initialization.md'
+      completed_date: '2025-12-08'
+      implementation_notes: 'queries.js (getMarketShare), history-init.js (initializeHistory). Market share calculated from history (not stored). Day 1 initialized with NVIDIA 80%, AMD 18%, Intel 2%. Code review fixes: added edge case tests, timeRange warning, integration tests. 67 new tests (634 total).'
 
 # PRD updated 2025-12-07: Added Phase 4-7+ roadmap
 # - Phase 4: Memory & Storage (SK Hynix, Micron, DRAM, GDDR, HBM, SSD, HDD)
@@ -115,5 +121,4 @@ sprint-status:
 # - Added "Simulation Realism Principles" - real physics, no hardcoded margins, full freedom
 
 # Next recommended workflows:
-# - dev-story: Implement Story 2.2
-# - create-story: Draft Story 2.3
+# - create-story: Draft Story 2.4 (The Crushing Chart - SVG Line Chart)

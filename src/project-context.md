@@ -1,5 +1,5 @@
 # Project Context - TechGame
-Updated: 2025-12-07 | Stories: 1.1-1.8, 2.1-2.2 complete
+Updated: 2025-12-08 | Stories: 1.1-1.8, 2.1-2.3 complete
 
 ## Module Exports
 
@@ -23,6 +23,9 @@ formatters: formatCurrency(n)→"$1.23M" | formatPercent(n,{showSign?,decimals?}
   - Currency/Number: min $0.01, max 999.99T, rounds to 2 decimals for small values
   - formatDetailedTime: Shows time progression within quarters (month, day, hour) - all values zero-padded to 2 digits
 math: clamp(val,min,max) | lerp(start,end,t) | randomInRange(min,max) | roundTo(val,decimals)
+queries: getMarketShare(state,company,timeRange?)→decimal(0-1) | getTimeRangeDays(timeRange)→number
+  - timeRange: 'day'(1), 'week'(7), 'month'(30), 'quarter'(90), 'year'(365), 'ttm'(365)
+  - Market share calculated from history (not stored) - company units / total units
 ```
 
 ### state/
@@ -34,6 +37,14 @@ game-state: createInitialState()→state object
 ```
 game-loop: startGameLoop(state,renderFn,onError?) | stopGameLoop() | updateLoopSpeed(state) | VALID_TICK_SPEEDS=[1,2,4]
 time-controls: pauseGame(state) | playGame(state) | togglePause(state) | setSpeed(state,speed) | skipToNextQuarter(state)
+```
+
+### simulation/ (imports: state, data, utils)
+```
+history-init: initializeHistory(state) - Creates Day 1 history entry with starting market conditions
+  - Called once after products are populated
+  - Distributes daily demand by STARTING_MARKET_SHARE (80/18/2/0)
+  - Distributes company units across products by inverse price (cheaper sells more)
 ```
 
 ### ui/ (imports: state,core,utils)
@@ -53,6 +64,8 @@ state.companies.{nvidia|amd|intel}: {name,cash,products[],rdProjects[],marketing
 state.market: {totalDemand,segments:{budget,midrange,highend},preferences}
 state.products: {} // key: "{company}-{slug}-{year}q{quarter}" - populated by main.js from starting-products.js
 state.history: {daily[],events[]}
+  daily[]: {day,month,year,sales:{company:{productId:{units,revenue,cost}}},companyTotals:{company:{units,revenue,costs,rdSpend,marketing}}}
+  - Initialized with Day 1 data by initializeHistory() in main.js
 state.ui: {currentView,selectedProduct,gpuDesigner:{specs:{cores,vram,clockSpeed,tdp,dieSize,nm},name,price}}
 ```
 
@@ -82,8 +95,9 @@ Note: Shortcuts ignored when typing in input/textarea fields
 ```
 utils → no imports allowed
 state → no imports allowed
-core → may import state
-ui → may import state,core,utils
 data → no imports allowed (JSON/constants only)
+core → may import state
+simulation → may import state, data, utils
+ui → may import state,core,utils
 main → may import all
 ```
